@@ -1,7 +1,7 @@
-import sqlite3
-
-conn = sqlite3.connect('library_db.db')
-my_cursor = conn.cursor()
+# import sqlite3
+#
+# conn = sqlite3.connect('library_db.db')
+# my_cursor = conn.cursor()
 
 # tables = books, authors, members, transactions, reviews
 
@@ -24,7 +24,7 @@ create_book_table = """
     FOREIGN KEY(author_id) REFERENCES authors(author_id) 
 );"""
 
-create_members_table = """
+create_member_table = """
       CREATE TABLE IF NOT EXISTS members(
       member_id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
@@ -56,11 +56,19 @@ create_review_table = """
     FOREIGN KEY (member_id) REFERENCES members(member_id)
     );"""
 
-my_cursor.execute(create_book_table)
-my_cursor.execute(create_author_table)
-my_cursor.execute(create_members_table)
-my_cursor.execute(create_transaction_table)
-my_cursor.execute(create_review_table)
+# my_cursor.execute(create_book_table)
+# my_cursor.execute(create_author_table)
+# my_cursor.execute(create_members_table)
+# my_cursor.execute(create_transaction_table)
+# my_cursor.execute(create_review_table)
 
-my_cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-print(my_cursor.fetchall())
+# my_cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+# print(my_cursor.fetchall())
+#
+# # delete a table
+# my_cursor.execute("DROP TABLE IF EXISTS books")
+# my_cursor.execute("DROP TABLE IF EXISTS authors")
+# my_cursor.execute("DROP TABLE IF EXISTS members")
+# my_cursor.execute("DROP TABLE IF EXISTS transactions")
+# my_cursor.execute("DROP TABLE IF EXISTS reviews")
+# print(my_cursor.fetchall())
