@@ -35,6 +35,33 @@ def create_tables(connection):
         connection.execute(create_db_tables.create_review_table)
 
 
+def get_author_id(connection, author_name):
+    cursor = connection.execute("SELECT author_id FROM members WHERE name = ?", (author_name,))
+    result = cursor.fetchone()
+    if result:
+        return result[0]
+    else:
+        return None
+
+
+def get_book_id(connection, book_name):
+    cursor = connection.execute("SELECT book_id FROM books WHERE name = ?", (book_name,))
+    result = cursor.fetchone()
+    if result:
+        return result[0]
+    else:
+        return None
+
+
+def get_member_id(connection, member_name):
+    cursor = connection.execute("SELECT member_id FROM members WHERE name = ?", (member_name,))
+    result = cursor.fetchone()
+    if result:
+        return result[0]
+    else:
+        return None
+
+
 def insert_rows_table(connection, query, values):
     with connection:
         connection.executemany(query, values)
@@ -94,33 +121,6 @@ def insert_member(connection):
         print(f"An error occurred: {e}")
 
 
-def get_author_id(connection, author_name):
-    cursor = connection.execute("SELECT author_id FROM members WHERE name = ?", (author_name,))
-    result = cursor.fetchone()
-    if result:
-        return result[0]
-    else:
-        return None
-
-
-def get_book_id(connection, book_name):
-    cursor = connection.execute("SELECT book_id FROM books WHERE name = ?", (book_name,))
-    result = cursor.fetchone()
-    if result:
-        return result[0]
-    else:
-        return None
-
-
-def get_member_id(connection, member_name):
-    cursor = connection.execute("SELECT member_id FROM members WHERE name = ?", (member_name,))
-    result = cursor.fetchone()
-    if result:
-        return result[0]
-    else:
-        return None
-
-
 def insert_transaction(connection):
     book_name = input("Enter the book's name: ")
     book_id = get_book_id(connection, book_name)
@@ -163,4 +163,23 @@ def insert_review(connection):
         print("Invalid input for book ID, member ID, or rating. Please enter valid numbers.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
+
+def delete_author(connection):
+    name = input("Enter the author's name: ")
+    author_name = name.lower()
+
+    author_query = "SELECT name FROM authors WHERE LOWER(name) = ?"
+
+    with connection:
+        cursor = connection.execute(author_query, (author_name,))
+        author_exists = cursor.fetchone()
+
+    if author_exists:
+        author_query = "DELETE FROM authors WHERE LOWER(name) = ?"
+        with connection:
+            connection.execute(author_query, (author_name,))
+        print(author_name, "has been deleted.")
+    else:
+        print("Author not found:", author_name)
 

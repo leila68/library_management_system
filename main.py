@@ -5,9 +5,14 @@ import database_functions
 if __name__ == "__main__":
     connection = database_functions.connect()
 
+    # delete author
+    database_functions.delete_author(connection)
+    show_items = database_functions.tables_values(connection, 'authors')
+    print(show_items)
+
     # insert author
-    database_functions.insert_author(connection)
-    database_functions.tables_values(connection, 'authors')
+    # database_functions.insert_author(connection)
+    # database_functions.tables_values(connection, 'authors')
 
     # # insert book
     # database_functions.insert_book(connection)
