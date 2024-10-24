@@ -36,16 +36,32 @@ def create_tables(connection):
         connection.execute(create_db_tables.create_review_table)
 
 
-def insert_author(connection, values):
+def insert_rows_table(connection, query, values):
     with connection:
-        connection.executemany(insert_in_tables.insert_authors, values)
+        connection.executemany(query, values)
+
+
+def insert_one_row_table(connection, query, value):
+    with connection:
+        connection.execute(query, value)
 
 
 if __name__ == "__main__":
     connection = connect()
     # create_tables(connection)
-    # insert_author(connection, insert_in_tables.author_values)
-    table_list = tables_list(connection)
-    print(table_list)
-    table_vals = tables_values(connection, 'authors')
-    print(table_vals)
+    # table_list = tables_list(connection)
+    # print(table_list)
+
+    # #insert in table
+    # author_query = insert_in_tables.insert_authors
+    # author_vals = insert_in_tables.author_values
+    # insert_rows_table(connection, author_query, author_vals)
+
+    # # insert in table
+    # query1 = "INSERT INTO authors (name, country, birth_year) VALUES (?, ?, ?);"
+    # value1 = ('Max', 'USA', 1980)
+    # insert_one_row_table(connection, query1, value1)
+
+    # # print table values
+    # table_vals = tables_values(connection,  'authors')
+    # print(table_vals)
