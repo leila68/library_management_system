@@ -28,7 +28,7 @@ create_member_table = """
       CREATE TABLE IF NOT EXISTS members(
       member_id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
-      membership_data DATA,
+      membership_date DATA,
       email TEXT,
       phone_number TEXT
       );"""
@@ -38,7 +38,7 @@ create_transaction_table = """
       transaction_id INTEGER PRIMARY KEY,
       book_id INTEGER,
       member_id INTEGER,
-      borow_date DATE,
+      borrow_date DATE,
       return_date DATE,
       FOREIGN KEY(book_id) REFERENCES books(book_id),
       FOREIGN KEY (member_id) REFERENCES members(member_id)
