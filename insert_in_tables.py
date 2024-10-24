@@ -6,7 +6,8 @@
 author_values = [
     ('Lili', 'Iran', 1989),
     ('Niki', 'Canada', 1990),
-    ('Piki', 'Germany', 1991)
+    ('Piki', 'Germany', 1991),
+    ('Riki', 'Germany', 1991)
 ]
 
 insert_authors = "INSERT INTO authors (name, country, birth_year) VALUES (?, ?, ?);"
