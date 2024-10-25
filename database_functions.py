@@ -195,14 +195,14 @@ def delete_book(connection):
     book_name = input("Enter the book's name: ")
     book_name.lower()
 
-    book_query = "SELECT name FROM books WHERE LOWER(name) = ?"
+    book_query = "SELECT title FROM books WHERE LOWER(title) = ?"
 
     with connection:
         cursor = connection.execute(book_query, (book_name,))
         author_exists = cursor.fetchone()
 
     if author_exists:
-        del_query = "DELETE FROM authors WHERE LOWER(name) = ?"
+        del_query = "DELETE FROM books WHERE LOWER(title) = ?"
         with connection:
             connection.execute(del_query, (book_name,))
         print(book_name, "has been deleted.")
@@ -220,7 +220,7 @@ def delete_member(connection):
         cursor = connection.execute(member_query, (member_name,))
         book_exists = cursor.fetchone()
     if book_exists:
-        del_query = "DELETE FROM books WHERE LOWER(name) = ?"
+        del_query = "DELETE FROM members WHERE LOWER(name) = ?"
         with connection:
             connection.execute(del_query, (member_name,))
             print(member_name, "has been deleted.")
@@ -231,19 +231,23 @@ def delete_member(connection):
 def delete_transaction(connection):
     member_name = input("Enter the member's name: ")
     member_id = get_member_id(connection, member_name)
-
-    trans_query = "SELECT * FROM transaction WHERE member_id = ?"
+    # Check if member_id exists
+    if member_id is None:
+        print(f"No member found with the name '{member_name}'.")
+        return
+    print ("mem_id", member_id)
+    trans_query = "SELECT * FROM transactions WHERE member_id = ?"
 
     with connection:
         cursor = connection.execute(trans_query, (member_id,))
         trans_exists = cursor.fetchall()
     if trans_exists:
-        del_query = "DELETE FROM transaction WHERE member_id = ?"
+        del_query = "DELETE FROM transactions WHERE member_id = ?"
         with connection:
             connection.execute(del_query, (member_id,))
             print(member_name, "transaction deleted.")
     else:
-        print(member_name, " transaction was not found!")
+        print(member_name, "transaction was not found!")
 
 
 def delete_review(connection):
